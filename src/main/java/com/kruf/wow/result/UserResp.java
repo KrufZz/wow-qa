@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserResp {
     private Integer code;
-    private String username;
+    private String realname;
     private Integer number;
 
 }

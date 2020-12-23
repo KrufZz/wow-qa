@@ -7,6 +7,7 @@ import com.kruf.wow.mapper.ProblmMapper;
 import com.kruf.wow.mapper.UserMapper;
 import com.kruf.wow.pojo.Problm;
 import com.kruf.wow.pojo.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class IssueController {
     @Autowired
     private ProblmMapper problmMapper;
@@ -29,12 +31,10 @@ public class IssueController {
     @PostMapping(value = "api/issue")
     @ResponseBody
     public List<Problm> issue(@RequestBody Problm problm){
-        System.out.println("in issue");
-        System.out.println(problm.getQuestion());
+        log.info("问题是:{}",problm.getQuestion());
         QueryWrapper<Problm> wrapper =new QueryWrapper<>();
         wrapper.like("question",problm.getQuestion());
         List<Problm> problms = problmMapper.selectList(wrapper);
-        problms.forEach(System.out::print);
         User user=null;
         Integer countNumber=0;
         if (!CollectionUtils.isEmpty(problms)){
@@ -44,7 +44,7 @@ public class IssueController {
             upWrapper.setSql("number = number +1 where id="+user.getId());
             int update = userMapper.update(user, upWrapper);
             if (update>0){
-                System.out.println("增加成功");
+                log.info("增加次数成功");
             }
         }
         return problms;
