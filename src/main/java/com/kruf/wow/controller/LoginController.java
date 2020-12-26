@@ -39,10 +39,11 @@ public class LoginController {
 
         log.info("登录用户{}",loginUser.toString());
 
-        if (loginUser !=null){
-            return new UserResp(Result.SUCCESS.getCode(),loginUser.getRealname(),loginUser.getNumber());
-        }else {
-            return new UserResp(Result.ERROR.getCode(),loginUser.getRealname(),loginUser.getNumber());
-        }
+//        if (loginUser !=null){
+//            return new UserResp(Result.SUCCESS.getCode(),loginUser.getRealname(),loginUser.getNumber());
+//        }else {
+//            return new UserResp(Result.ERROR.getCode(),loginUser.getRealname(),loginUser.getNumber());
+//        }
+        return null;
     }
 }

@@ -9,5 +9,16 @@ public class UserResp {
     private Integer code;
     private String realname;
     private Integer number;
+    private Object data;
+
+    public UserResp() {
+
+    }
+
+    public static UserResp success(Object data){
+        UserResp resultVo = new UserResp();
+        resultVo.setData(data);
+        return resultVo;
+    }
 
 }
