@@ -7,14 +7,12 @@ import com.kruf.wow.mapper.ProblmMapper;
 import com.kruf.wow.mapper.UserMapper;
 import com.kruf.wow.pojo.Problm;
 import com.kruf.wow.pojo.User;
+import com.kruf.wow.vo.ProblmVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,20 +28,22 @@ public class IssueController {
     @CrossOrigin
     @PostMapping(value = "api/issue")
     @ResponseBody
-    public List<Problm> issue(@RequestBody Problm problm){
-        log.info("问题是:{}",problm.getQuestion());
+    public List<Problm> issue(@RequestBody ProblmVo problmVo){
+        log.info("返回值{}",problmVo.getUsername());
+        log.info("问题是:{}",problmVo.getQuestion());
         QueryWrapper<Problm> wrapper =new QueryWrapper<>();
-        wrapper.like("question",problm.getQuestion());
+        wrapper.like("question",problmVo.getQuestion());
         List<Problm> problms = problmMapper.selectList(wrapper);
-        User user=null;
         Integer countNumber=0;
+        User user=null;
         if (!CollectionUtils.isEmpty(problms)){
             //不为空就加一次提问次数
             UpdateWrapper<User> upWrapper=new UpdateWrapper<>();
-            user = userMapper.selectById(1);
-            upWrapper.setSql("number = number +1 where id="+user.getId());
-            int update = userMapper.update(user, upWrapper);
-            if (update>0){
+            QueryWrapper<User> wrapperUser =new QueryWrapper<>();
+            wrapperUser.eq("username",problmVo.getUsername());
+            user = userMapper.selectOne(wrapperUser);
+            Integer integer = userMapper.updateNumber(user.getId());
+            if (integer>0){
                 log.info("增加次数成功");
             }
         }
