@@ -7,6 +7,7 @@ import com.kruf.wow.mapper.UserMapper;
 import com.kruf.wow.pojo.User;
 import com.kruf.wow.result.Result;
 import com.kruf.wow.result.UserResp;
+import com.kruf.wow.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -20,30 +21,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.List;
 
 
 @Controller
 @Slf4j
 public class LoginController {
+
     @Autowired
-    private UserMapper userMapper;
+    private IUserService userService;
 
 
     @CrossOrigin
     @PostMapping(value = "api/login")
     @ResponseBody
     public UserResp login(@RequestBody User user) {
-        String username = user.getUsername();
-        Subject subject = SecurityUtils .getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, user.getPassword());
-        try {
-            subject.login(usernamePasswordToken);
-            return new UserResp(200,username);
-        }catch (AuthenticationException e){
-            String msg="账号密码错误";
-            return new UserResp(400,msg);
-        }
-
-
+        UserResp userResp = userService.loginUser(user);
+        return userResp;
     }
 }

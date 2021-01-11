@@ -34,16 +34,14 @@ public class IssueController {
         QueryWrapper<Problm> wrapper =new QueryWrapper<>();
         wrapper.like("question",problmVo.getQuestion());
         List<Problm> problms = problmMapper.selectList(wrapper);
-        Integer countNumber=0;
         User user=null;
         if (!CollectionUtils.isEmpty(problms)){
             //不为空就加一次提问次数
-            UpdateWrapper<User> upWrapper=new UpdateWrapper<>();
             QueryWrapper<User> wrapperUser =new QueryWrapper<>();
             wrapperUser.eq("username",problmVo.getUsername());
             user = userMapper.selectOne(wrapperUser);
-            Integer integer = userMapper.updateNumber(user.getId());
-            if (integer>0){
+            Integer addNumber = userMapper.updateNumber(user.getId());
+            if (addNumber>0){
                 log.info("增加次数成功");
             }
         }
