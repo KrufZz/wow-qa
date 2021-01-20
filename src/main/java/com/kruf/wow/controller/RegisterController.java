@@ -4,7 +4,6 @@ import com.kruf.wow.mapper.UserMapper;
 import com.kruf.wow.pojo.User;
 import com.kruf.wow.result.Result;
 import com.kruf.wow.result.UserResp;
-import com.sun.xml.internal.txw2.output.ResultFactory;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +20,36 @@ public class RegisterController {
     @Autowired
     private UserMapper userMapper;
 
+    public static final String USER_EXIST="用户名已被使用";
+    public static final String PASSWORD_SHORT="密码不能少于三位";
+
 
     @CrossOrigin
     @PostMapping("api/register")
     @ResponseBody
-    public UserResp register(@RequestBody User user) {
+    public UserResp register(@RequestBody User user) throws Exception {
         UserResp userResp=new UserResp();
         String username = user.getUsername();
         String password = user.getPassword();
         username = HtmlUtils.htmlEscape(username);
         user.setUsername(username);
+        Boolean exist=false;
+        Integer exist1 = userMapper.isExist(username);
+        if (exist1!=null && exist1>0){
+            exist=true;
+        }
+        if (exist) {
+            userResp.setCode(Result.ERROR.getCode());
+            userResp.setData(USER_EXIST);
+            return userResp;
+        }
 
-//        boolean exist = userMapper.isExist(username);
-//        if (exist) {
-//            String message = "用户名已被使用";
-//            return ResultFactory.buildFailResult(message);
-//        }
+        if (user.getPassword().length()<3){
+            userResp.setCode(Result.ERROR.getCode());
+            userResp.setData(PASSWORD_SHORT);
+            return userResp;
+        }
+
 
         // 生成盐,默认长度 16 位
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();

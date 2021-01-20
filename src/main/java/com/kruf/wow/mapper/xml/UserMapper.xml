@@ -21,4 +21,8 @@
         select <include refid="Base_Column_List"></include> from user
     </select>
 
+    <select id="isExist" resultType="java.lang.Integer">
+        select * from user where username=#{username}
+    </select>
+
 </mapper>
