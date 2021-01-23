@@ -3,9 +3,11 @@ package com.kruf.wow;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @MapperScan("com.kruf.wow.mapper")
+@EnableScheduling
 public class WowApplication {
 
     public static void main(String[] args) {
