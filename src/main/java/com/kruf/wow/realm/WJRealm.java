@@ -14,9 +14,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.security.sasl.AuthorizeCallback;
-
-public class WJRealm extends AuthorizingRealm{
+public class WJRealm extends AuthorizingRealm {
     @Autowired
     private UserMapper userMapper;
 
@@ -29,8 +27,8 @@ public class WJRealm extends AuthorizingRealm{
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String userName = token.getPrincipal().toString();
-        QueryWrapper<User> wrapper =new QueryWrapper<>();
-        wrapper.eq("username",userName);
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", userName);
         User user = userMapper.selectOne(wrapper);
         String passwordInDB = user.getPassword();
         String salt = user.getSalt();

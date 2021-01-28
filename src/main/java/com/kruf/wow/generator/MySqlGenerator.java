@@ -1,14 +1,11 @@
 package com.kruf.wow.generator;
 
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
@@ -116,7 +113,7 @@ public class MySqlGenerator {
 
         // 配置自定义输出模板
         //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-         //templateConfig.setEntity("templates/entity.java");
+        //templateConfig.setEntity("templates/entity.java");
         // templateConfig.setService();
         // templateConfig.setController();
 
@@ -136,5 +133,5 @@ public class MySqlGenerator {
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
     }
-    }
+}
 

@@ -10,5 +10,7 @@ import java.util.List;
 public interface ProblmMapper extends BaseMapper<Problm> {
     @Select("SELECT * FROM problm ORDER BY RAND() LIMIT 1 ")
     List<Problm> randomIssue(@Param("question")String question);
-    
+
+    @Select("SELECT * FROM problm where id=${id}")
+    List<Problm> get(@Param("id")String id);
 }

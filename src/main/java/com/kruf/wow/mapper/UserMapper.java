@@ -14,6 +14,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     List<User> testSql();
 
-    Integer isExist(@Param("username")String username);
+    Integer isExist(@Param("username") String username);
 
 }

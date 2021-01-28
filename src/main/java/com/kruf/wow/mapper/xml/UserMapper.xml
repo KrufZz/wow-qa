@@ -22,7 +22,7 @@
     </select>
 
     <select id="isExist" resultType="java.lang.Integer">
-        select * from user where username=#{username}
+        select count(1) from user where username=#{username}
     </select>
 
 </mapper>

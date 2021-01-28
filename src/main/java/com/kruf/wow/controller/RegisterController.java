@@ -20,31 +20,28 @@ public class RegisterController {
     @Autowired
     private UserMapper userMapper;
 
-    public static final String USER_EXIST="用户名已被使用";
-    public static final String PASSWORD_SHORT="密码不能少于三位";
+    public static final String USER_EXIST = "用户名已被使用";
+    public static final String PASSWORD_SHORT = "密码不能少于三位";
 
 
     @CrossOrigin
     @PostMapping("api/register")
     @ResponseBody
     public UserResp register(@RequestBody User user) throws Exception {
-        UserResp userResp=new UserResp();
+        UserResp userResp = new UserResp();
         String username = user.getUsername();
         String password = user.getPassword();
         username = HtmlUtils.htmlEscape(username);
         user.setUsername(username);
-        Boolean exist=false;
-        Integer exist1 = userMapper.isExist(username);
-        if (exist1!=null && exist1>0){
-            exist=true;
-        }
+
+        Boolean exist = userMapper.isExist(username) > 0;
         if (exist) {
             userResp.setCode(Result.ERROR.getCode());
             userResp.setData(USER_EXIST);
             return userResp;
         }
 
-        if (user.getPassword().length()<3){
+        if (user.getPassword().length() < 3) {
             userResp.setCode(Result.ERROR.getCode());
             userResp.setData(PASSWORD_SHORT);
             return userResp;
@@ -61,7 +58,6 @@ public class RegisterController {
         user.setSalt(salt);
         user.setPassword(encodedPassword);
         userMapper.insert(user);
-
         userResp.setCode(Result.SUCCESS.getCode());
 
 
