@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.validation.Valid;
 @Controller
 public class RegisterController {
 
@@ -27,7 +28,7 @@ public class RegisterController {
     @CrossOrigin
     @PostMapping("api/register")
     @ResponseBody
-    public UserResp register(@RequestBody User user) throws Exception {
+    public UserResp register(@RequestBody @Valid User user)  {
         UserResp userResp = new UserResp();
         String username = user.getUsername();
         String password = user.getPassword();
@@ -40,13 +41,6 @@ public class RegisterController {
             userResp.setData(USER_EXIST);
             return userResp;
         }
-
-        if (user.getPassword().length() < 3) {
-            userResp.setCode(Result.ERROR.getCode());
-            userResp.setData(PASSWORD_SHORT);
-            return userResp;
-        }
-
 
         // 生成盐,默认长度 16 位
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();
