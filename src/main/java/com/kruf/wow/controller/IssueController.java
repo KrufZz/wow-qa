@@ -45,8 +45,8 @@ public class IssueController {
 
     @PostMapping(value = "/list")
     @ResponseBody
-    public List<Problm> get(String id) {
-        List<Problm> problms = problmMapper.get(id);
-        return problms;
+    public Problm get(String id) {
+        Problm problm = problmMapper.selectById(id);
+        return problm;
     }
 }

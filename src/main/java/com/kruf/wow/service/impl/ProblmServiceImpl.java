@@ -43,8 +43,12 @@ public class ProblmServiceImpl extends ServiceImpl<ProblmMapper, Problm> impleme
             //不为空就加一次提问次数
             QueryWrapper<User> wrapperUser =new QueryWrapper<>();
             wrapperUser.eq("username",problmVo.getUsername());
+
             user = userMapper.selectOne(wrapperUser);
-            Integer addNumber = userMapper.updateNumber(user.getId());
+            System.out.println("user对象"+user.toString());
+            user.setNumber(user.getNumber()+1);
+
+            Integer addNumber = userMapper.updateById(user);
             if (addNumber>0){
                 log.info("增加次数成功");
             }

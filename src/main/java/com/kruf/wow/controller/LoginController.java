@@ -1,16 +1,15 @@
 package com.kruf.wow.controller;
 
 
+import com.kruf.wow.annotation.LimitRequest;
 import com.kruf.wow.pojo.User;
+import com.kruf.wow.result.ResultVo;
 import com.kruf.wow.result.UserResp;
 import com.kruf.wow.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -30,9 +29,15 @@ public class LoginController {
         return userResp;
     }
 
+    @CrossOrigin
+    @GetMapping(value = "api/test")
     @ResponseBody
-    @PostMapping("/test")
-    public String test(){
-        return "hello";
+    @LimitRequest(count = 1)
+    public ResultVo test(){
+        ResultVo vo=new ResultVo();
+        vo.setCode(200);
+        vo.setData("阿伟!");
+        vo.setMsg("返回成功");
+        return vo;
     }
 }
