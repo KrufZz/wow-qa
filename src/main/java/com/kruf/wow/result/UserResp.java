@@ -15,6 +15,7 @@ public class UserResp {
     public static UserResp success(Object data){
         UserResp resultVo = new UserResp();
         resultVo.setData(data);
+        resultVo.setCode(200);
         return resultVo;
     }
 
