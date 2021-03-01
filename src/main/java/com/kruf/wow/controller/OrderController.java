@@ -26,6 +26,7 @@ public class OrderController {
     @ResponseBody
     public UserResp Order(@RequestBody OrderVo orderVo) {
         Order order=new Order();
+        log.info("订单信息[{}]",orderVo);
         BeanUtils.copyProperties(orderVo,order);
         boolean flag= orderMapper.insert(order)>0;
         if (flag){
