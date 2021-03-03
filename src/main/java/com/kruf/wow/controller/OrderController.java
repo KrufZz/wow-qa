@@ -5,6 +5,8 @@ import com.kruf.wow.mapper.OrderMapper;
 import com.kruf.wow.pojo.Order;
 import com.kruf.wow.result.UserResp;
 import com.kruf.wow.vo.OrderVo;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -33,5 +37,14 @@ public class OrderController {
             log.info("添加订单成功");
         }
         return UserResp.success("成功");
+    }
+
+
+    @CrossOrigin
+    @PostMapping(value = "api/orderlist")
+    @ResponseBody
+    public List<Order> Orderlist(){
+        List<Order> orders = orderMapper.selectList(null);
+        return orders;
     }
 }

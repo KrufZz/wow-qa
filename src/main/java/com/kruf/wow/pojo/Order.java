@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -33,6 +35,7 @@ public class Order implements Serializable {
     /**
      * 角色名
      */
+    @ApiModelProperty("角色名")
     @TableField("role_name")
     private String roleName;
 

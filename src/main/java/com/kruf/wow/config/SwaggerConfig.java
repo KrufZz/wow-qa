@@ -34,14 +34,14 @@ public class SwaggerConfig {
     }
 
     /**
-     * 接口文档详细信息
+     * 接口文档详细信
      *
      * @return
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("SwaggerUI演示")
-                .description("接口文档，描述词省略200字")
+                .title("api-doc")
+                .description("wow-api接口文档")
                 .version("1.0")
                 .build();
     }
